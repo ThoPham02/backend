@@ -1,0 +1,293 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/nckh/lecturer/create_topic": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "create_topic",
+                "tags": [
+                    "topic"
+                ],
+                "summary": "create_topic",
+                "parameters": [
+                    {
+                        "description": "create topic",
+                        "name": "CreateTopic",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/types.CreateTopicRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.CreateTopicResponse"
+                        }
+                    },
+                    "401": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/nckh/lecturer/topic/{id}": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "update_topic",
+                "tags": [
+                    "topic"
+                ],
+                "summary": "update_topic",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Key to search",
+                        "name": "Key",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/types.UpdateTopicRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.UpdateTopicInput"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/types.HttpErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/nckh/search_topic_by_key": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get_by_searching",
+                "tags": [
+                    "topic"
+                ],
+                "summary": "get_by_searching",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Key to search",
+                        "name": "Key",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.TopicGetBySearchingResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/types.HttpErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/nckh/topic": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get_all",
+                "tags": [
+                    "topic"
+                ],
+                "summary": "get_all",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.TopicGetAllResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/types.HttpErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "types.CreateTopicRequest": {
+            "type": "object",
+            "properties": {
+                "allowance": {
+                    "type": "string"
+                },
+                "end_day": {
+                    "type": "string"
+                },
+                "group_student_id": {
+                    "type": "integer"
+                },
+                "lecturer_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "start_day": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "types.CreateTopicResponse": {
+            "type": "object"
+        },
+        "types.HttpErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "Bad Request"
+                }
+            }
+        },
+        "types.Topic": {
+            "type": "object",
+            "properties": {
+                "allowance": {
+                    "type": "string"
+                },
+                "end_day": {
+                    "type": "string"
+                },
+                "group_student_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lecturer_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "start_day": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "types.TopicGetAllResponse": {
+            "type": "object",
+            "properties": {
+                "topic_response": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/types.Topic"
+                    }
+                }
+            }
+        },
+        "types.TopicGetBySearchingResponse": {
+            "type": "object",
+            "properties": {
+                "topic_response": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/types.Topic"
+                    }
+                }
+            }
+        },
+        "types.UpdateTopicInput": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "$ref": "#/definitions/types.UpdateTopicPath"
+                },
+                "request": {
+                    "$ref": "#/definitions/types.UpdateTopicRequest"
+                }
+            }
+        },
+        "types.UpdateTopicPath": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "types.UpdateTopicRequest": {
+            "type": "object",
+            "properties": {
+                "allowance": {
+                    "type": "string"
+                },
+                "end_day": {
+                    "type": "string"
+                },
+                "group_student_id": {
+                    "type": "integer"
+                },
+                "lecturer_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "start_day": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

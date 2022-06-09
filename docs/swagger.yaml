@@ -1,0 +1,184 @@
+definitions:
+  types.CreateTopicRequest:
+    properties:
+      allowance:
+        type: string
+      end_day:
+        type: string
+      group_student_id:
+        type: integer
+      lecturer_id:
+        type: integer
+      name:
+        type: string
+      start_day:
+        type: string
+      status:
+        type: string
+    type: object
+  types.CreateTopicResponse:
+    type: object
+  types.HttpErrorResponse:
+    properties:
+      error:
+        example: Bad Request
+        type: string
+    type: object
+  types.Topic:
+    properties:
+      allowance:
+        type: string
+      end_day:
+        type: string
+      group_student_id:
+        type: integer
+      id:
+        type: integer
+      lecturer_id:
+        type: integer
+      name:
+        type: string
+      start_day:
+        type: string
+      status:
+        type: string
+    type: object
+  types.TopicGetAllResponse:
+    properties:
+      topic_response:
+        items:
+          $ref: '#/definitions/types.Topic'
+        type: array
+    type: object
+  types.TopicGetBySearchingResponse:
+    properties:
+      topic_response:
+        items:
+          $ref: '#/definitions/types.Topic'
+        type: array
+    type: object
+  types.UpdateTopicInput:
+    properties:
+      path:
+        $ref: '#/definitions/types.UpdateTopicPath'
+      request:
+        $ref: '#/definitions/types.UpdateTopicRequest'
+    type: object
+  types.UpdateTopicPath:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  types.UpdateTopicRequest:
+    properties:
+      allowance:
+        type: string
+      end_day:
+        type: string
+      group_student_id:
+        type: integer
+      lecturer_id:
+        type: integer
+      name:
+        type: string
+      start_day:
+        type: string
+      status:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /nckh/lecturer/create_topic:
+    post:
+      description: create_topic
+      parameters:
+      - description: create topic
+        in: body
+        name: CreateTopic
+        schema:
+          $ref: '#/definitions/types.CreateTopicRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.CreateTopicResponse'
+        "401":
+          description: ""
+      security:
+      - ApiKeyAuth: []
+      summary: create_topic
+      tags:
+      - topic
+  /nckh/lecturer/topic/{id}:
+    put:
+      description: update_topic
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Key to search
+        in: body
+        name: Key
+        required: true
+        schema:
+          $ref: '#/definitions/types.UpdateTopicRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.UpdateTopicInput'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.HttpErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: update_topic
+      tags:
+      - topic
+  /nckh/search_topic_by_key:
+    get:
+      description: get_by_searching
+      parameters:
+      - description: Key to search
+        in: query
+        name: Key
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.TopicGetBySearchingResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.HttpErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get_by_searching
+      tags:
+      - topic
+  /nckh/topic:
+    get:
+      description: get_all
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.TopicGetAllResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/types.HttpErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get_all
+      tags:
+      - topic
+swagger: "2.0"
